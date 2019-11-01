@@ -1,12 +1,7 @@
 "==========================================
-" ProjectLink: https://github.com/wklken/vim-for-server
+" ProjectLink: https://github.com/rogerzhoume/vim-for-server
 " Author:  wklken
-" Version: 0.2
 " Email: wklken@yeah.net
-" BlogPost: http://www.wklken.me
-" Donation: http://www.wklken.me/pages/donation.html
-" ReadMe: README.md
-" Last_modify: 2015-07-07
 " Desc: simple vim config for server, without any plugins.
 "==========================================
 
@@ -26,7 +21,6 @@ filetype on
 filetype plugin on
 filetype indent on
 
-
 " base
 set nocompatible                " don't bother with vi compatibility
 set autoread                    " reload files when changed on disk, i.e. via `git checkout`
@@ -42,32 +36,28 @@ set visualbell t_vb=            " turn off error beep/flash
 set t_vb=
 set tm=500
 
-
 " show location
 set cursorcolumn
 set cursorline
 
-
 " movement
 set scrolloff=7                 " keep 3 lines when scrolling
-
 
 " show
 set ruler                       " show the current row and column
 set number                      " show line numbers
+set relativenumber              " show relative line numbers
 set nowrap
 set showcmd                     " display incomplete commands
 set showmode                    " display current modes
 set showmatch                   " jump to matches when entering parentheses
 set matchtime=2                 " tenths of a second to show the matching parenthesis
 
-
 " search
 set hlsearch                    " highlight searches
 set incsearch                   " do incremental searching, search as you type
 set ignorecase                  " ignore case when searching
 set smartcase                   " no ignorecase if Uppercase char present
-
 
 " tab
 set expandtab                   " expand tabs to spaces
@@ -148,6 +138,8 @@ set laststatus=2   " Always show the status line - use 2 lines for the status ba
 
 autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
 autocmd FileType ruby set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+autocmd FileType yml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+autocmd FileType sh set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd BufRead,BufNew *.md,*.mkd,*.markdown  set filetype=markdown.mkd
 
 autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
@@ -197,60 +189,12 @@ set pastetoggle=<F5>            "    when in insert mode, press <F5> to go to
 au InsertLeave * set nopaste
 nnoremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 
-" kj 替换 Esc
-inoremap kj <Esc>
-
-" Quickly close the current window
-nnoremap <leader>q :q<CR>
-" Quickly save the current file
-nnoremap <leader>w :w<CR>
-
-" select all
-map <Leader>sa ggVG"
-
-" remap U to <C-r> for easier redo
-nnoremap U <C-r>
-
-" Swap implementations of ` and ' jump to markers
-" By default, ' jumps to the marked line, ` jumps to the marked line and
-" column, so swap them
-nnoremap ' `
-nnoremap ` '
-
-" switch # *
-" nnoremap # *
-" nnoremap * #
-
-"Keep search pattern at the center of the screen."
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <silent> g* g*zz
-
 " remove highlight
 noremap <silent><leader>/ :nohls<CR>
 
-"Reselect visual block after indent/outdent.调整缩进后自动选中，方便再次操作
+"Reselect visual block after indent/outdent.
 vnoremap < <gv
 vnoremap > >gv
 
-" y$ -> Y Make Y behave like other capitals
-map Y y$
-
-"Map ; to : and save a million keystrokes
-" ex mode commands made easy 用于快速进入命令行
-nnoremap ; :
-
-" Shift+H goto head of the line, Shift+L goto end of the line
-nnoremap H ^
-nnoremap L $
-
 " save
 cmap w!! w !sudo tee >/dev/null %
-
-" command mode, ctrl-a to head， ctrl-e to tail
-cnoremap <C-j> <t_kd>
-cnoremap <C-k> <t_ku>
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
